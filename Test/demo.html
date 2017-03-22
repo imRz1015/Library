@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<script type="text/javascript" src="script/jquery.min.js"></script>
+		<script type="text/javascript" src="script/vue.js"></script>
+		<style>
+			ul{
+				color: red;
+			}
+			li{
+				color: black;
+			}
+			.a{
+				border: 1px solid red;
+			}
+			.a-li{
+				border:  1px solid yellow;
+			}
+			.items{
+				background-color: red;
+			}
+			.tttt{
+				background-color: yellow;
+			}
+			.chk{
+				background-color: transparent;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<span>1</span><a>22222222222</a>\
+			<p class="items">its a demo!</p><div class="tttt">its a demo 2!</div>
+			<img class="pic" v-show="redp" src="img/redp_03.png">
+			<ul>
+				<li class="list-vie2" v-for="common in commons" >
+					<a href="#">
+						{{common.text}}{{common.name}}
+					</a>
+				</li>
+			</ul>
+			<input type="text" v-model="messege" placeholder="edit me">
+			<p>this message is:{{messege}}</p>
+			<button @click="clickBtn()">Click!</button>
+			<p>the message is:{{word}}</p>
+			<input type="text" v-model="word" />
+			<p :class="[isA?classA:classB]">
+				this is a demo!
+			</p>
+			<p v-if="show">Now you can see me!</p>
+			<p v-else>Now you see the other words!</p>
+			<!-- <div cla<!-ss="bigDiv" v-for="list in lists">
+				<p>NAME:{{list.name}}</p>
+				<p>AGE:{{list.age}}</p>
+				<p>ADRESS:{{list.adress}}</p>
+			</div> --> 
+			<ul v-for='(i,index) in lists'>
+			{{index}}
+				<li v-for='(n,index) in i.order' >
+				{{index}}
+					<span>{{n.name}}</span>
+					<span>{{n.value}}</span>
+				</li>
+			</ul>
+			<ul class="a">
+				<li class="a-li"></li>
+				<li class="a-li"></li>
+				<li class="a-li"></li>
+				<li class="a-li"></li>
+			</ul>
+			<input type="checkbox" class="chk" checked="checked" /><label for=".chk">左门槛</label>
+	</div>
+	</body>
+	<script type="text/javascript">
+	var sites=[
+			{
+				"name":"pic",
+				"url":"www.baidu.com",
+				"value":'999'
+			},
+			{
+				"name":"ves",
+				"url":"www.sina.com",
+				"value":'777'
+			}
+		]
+	var x=sites[0].value;
+	// alert(x);
+ 	new Vue({
+ 		el:".wrap",
+ 		data:{	
+ 			count:1,
+ 			commons:[
+ 				{text:'11222211'},
+ 				{name:'66666'},
+ 				{text:'2222'},
+ 				{text:'33333'}
+ 			],
+   			messege:"",
+   			word:"",
+   			classA:"classA",
+   			classB:"classB",
+   			isA:false,
+   			show:false,
+   			lists:[
+   				{
+   					order:[
+   						{name:'详细0',value:'免费0'},{name:'详细1',value:'免费1'}
+   					]
+   				},
+   				{
+   					order:[
+   						{name:'详细0',value:'免费0'},{name:'详细1',value:'免费1'}
+   					]
+   				}
+   			]
+ 		},
+   		methods:{
+   			clickBtn:function(){
+   				alert("Success!");
+   			}
+   		}
+ 	})
+</script>
+</html>

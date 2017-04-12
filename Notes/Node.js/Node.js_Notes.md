@@ -49,10 +49,22 @@
 	hello node!
 	
 ```
-####Run end!显示在data之前的原因：
+
+**Run end!显示在data之前的原因：**
+
 
 **当readFile执行后，会继续运行下面的代码，当readFile执行完毕，会将回调函数内的代码执行，此时’Run end!’已经输出，遍输出在‘Run end!‘后方**
 
+### 利用Node.js“require('http')”来声明服务器：
+```
+	var http = require('http');	//引用http服务器模块
+	var isWebServer=http.createServer(function(request,response){	//创建Server服务器
+		response.writeHead(200,{'Content-Type':'text/plain'});		//声明内容类型：纯文本
+		response.end('Hello NodeJs!\n');				//输出Hello NodeJs！
+});
+isWebServer.listen(8888);	//启用监听在8888端口					
 
+		
+```
 																			编辑于4/12/2017
 

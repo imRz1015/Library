@@ -13,7 +13,7 @@
 
 **iOS在运行时只有单独的一个线程，当前任务在执行时会利用资源跑当前任务，多任务时会将非当前的任务“冻结”在后台缓存，保证当前任务的效率和流畅性能。**
 
-###这两者的原理是完全不同的，但是思路可以相互借鉴。
+这两者的原理是完全不同的，但是思路可以相互借鉴。
 
 在Node.js安装按成后可以使用Node.js的cmd程序来运行、编译js文件：
 
@@ -28,23 +28,26 @@
 **通过异步方式读取文件：**
 
 <pre><code>
-		//FileName:  readFile.js
+	//FileName:  readFile.js
 
-		var fs=require('fs');	//引入模块fs
-		fs.readFile('file.txt','utf-8',function(err,data){	//参数为fileName,转码，回调函数(err,data)为定值，不可能改。
-		//当readFile方法读取文件之后解析为utf-8，将结果传递给data
-			if(err){
-				console.log(err.stack);
-			}else{
-				console.log(data);	//输出data的值（为file.txt的内容）
-			}
-		});
-		console.log('Run end !');
+	var fs=require('fs');	//引入模块fs
+	fs.readFile('file.txt','utf-8',function(err,data){	//参数为fileName,转码，回调函数(err,data)为定值，不可能改。
+	//当readFile方法读取文件之后解析为utf-8，将结果传递给data
+		if(err){
+			console.log(err.stack);
+		}else{
+			console.log(data);	//输出data的值（为file.txt的内容）
+		}
+	});
+	console.log('Run end !');
 </pre></code>
 
 **其执行结果为：**
-``` Run end!
+``` 	
+
+	Run end!
 	hello node!
+	
 ```
 ####Run end!显示在data之前的原因：
 

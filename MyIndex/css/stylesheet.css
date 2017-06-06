@@ -1,0 +1,433 @@
+			* {
+				margin: 0;
+				padding: 0;
+				font-family: 'Microsoft Yahei UI'
+			}
+			
+			ul {
+				list-style: none;
+			}
+			
+			input {
+				outline: none;
+				border: none;
+			}
+
+			#header {
+				position: fixed;
+				z-index: 99;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 70px;
+				padding-left: 95px;
+				padding-right: 95px;
+				background-color: transparent;
+				transition: background-color 0.5s linear;
+			}
+			
+			.h-li:hover {
+				cursor: pointer;
+			}
+			
+			.headerLeft {
+				height: 70px;
+				line-height: 70px;
+				font-size: 20px;
+				color: #ffffff;
+				transition: color 0.9s linear;
+			}
+			
+			.h-ul {
+				display: inline-block;
+				margin-left: 30%;
+			}
+			
+			.h-li {
+				color: #FFFFFF;
+				float: left;
+				margin-left: 80px;
+				transition: color 0.5s linear;
+			}
+			
+			.h-li:hover .borderBottom {
+				transform: scale(1, 1);
+				transform-origin: center;
+				transition: all 0.5s linear;
+			}
+			
+			.borderBottom {
+				background-color: #000000;
+				width: 100%;
+				height: 2px;
+				transform: scale(0, 0);
+				transition: all 0.3s linear;
+			}
+			
+			.isPic {
+				width: 100%;
+				height: 650px;
+				background-image: url(../image/sign.jpg);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+			
+			.intro {
+				text-align: center;
+				font-size: 30px;
+				padding: 100px 0;
+				color: #FFFFFF;
+			}
+			
+			.intro span {
+				font-family: "微软雅黑";
+				font-size: 20px;
+			}
+			
+			.touxiang {
+				margin: 50px auto;
+				width: 200px;
+				height: 200px;
+				background-image: url(../image/touxiang.jpg);
+				background-repeat: no-repeat;
+				background-size: 200px;
+				border-radius: 100px;
+			}
+			
+			.pic1,
+			.pic2,
+			.pic3,
+			.pic4,
+			.pic5,
+			.pic6,
+			.pic7,
+			.pic8 {
+				background-repeat: no-repeat;
+				background-position: center;
+				width: 300px;
+				height: 150px;
+				opacity: 0;
+				transform: translateY(60px);
+			}
+			
+			.pic1 {
+				background-image: url(../image/htmlcss.jpg);
+				background-size: 150px;
+			}
+			
+			.pic2 {
+				background-image: url(../image/php.jpg);
+				background-size: 100px;
+			}
+			
+			.pic3 {
+				background-image: url(../image/node.jpg);
+				background-size: 130px;
+			}
+			
+			.pic4 {
+				background-image: url(../image/ps.jpg);
+				background-size: 80px;
+			}
+			
+			.pic5 {
+				background-image: url(../image/j2.jpg);
+				background-size: 150px;
+			}
+			
+			.pic6 {
+				background-image: url(../image/jq3.jpg);
+				background-size: 140px;
+			}
+			
+			.pic7 {
+				background-image: url(../image/vue.jpg);
+				background-size: 140px;
+			}
+			
+			.pic8 {
+				background-image: url(../image/ws.jpg);
+				background-size: 80px;
+			}
+			
+			.skills {
+				text-align: center;
+				padding: 50px;
+				overflow: hidden;
+			}
+			
+			.skills table {
+				margin: 0 auto;
+			}
+			
+			.skillsIntro {
+				padding: 0 0 30px 0;
+				/*margin-top: 50px;*/
+				line-height: 60px;
+				font-size: 30px;
+				opacity: 0;
+				transform: translateY(30px);
+			}
+			
+			.skillsIntro2 {
+				font-size: 20px;
+				padding-bottom: 50px;
+				opacity: 0;
+				transform: translateY(30px);
+			}
+			
+			.itsJob {
+				padding: 50px 0 100px 150px;
+				clear: both;
+			}
+			
+			.codePic {
+				width: 550px;
+				height: 300px;
+				background-image: url(../image/code.jpg);
+				background-repeat: no-repeat;
+				background-size: 550px;
+				background-position: center;
+				float: left;
+				opacity: 0;
+			}
+			
+			.codeRight {
+				float: left;
+				width: 550px;
+				height: 200px;
+			}
+			
+			.jobTitle {
+				text-align: left;
+				font-size: 30px;
+				padding-left: 50px;
+				opacity: 0;
+			}
+			
+			.codeWords {
+				padding-top: 30px;
+				text-align: left;
+				font-size: 16px;
+				text-align: left;
+				line-height: 45px;
+				padding-left: 50px;
+				opacity: 0;
+			}
+			
+			.macPic1,
+			.macPic2,
+			.macPic3 {
+				float: left;
+			}
+			
+			.aboutWork {
+				clear: both;
+			}
+			
+			.macPic1 div {
+				margin-left: 90px;
+				width: 350px;
+				height: 200px;
+				background-image: url(../image/6.jpg);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: 350px;
+				opacity: 0;
+				transform: translateY(30px);
+			}
+			
+			.macPic2 div {
+				margin-left: 70px;
+				width: 350px;
+				height: 200px;
+				background-image: url(../image/5.jpg);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: 350px;
+				opacity: 0;
+				transform: translateY(30px);
+			}
+			
+			.macPic3 div {
+				margin-left: 70px;
+				width: 350px;
+				height: 200px;
+				background-image: url(../image/4.jpg);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: 350px;
+				opacity: 0;
+				transform: translateY(30px);
+			}
+			
+			.isPicTitle {
+				font-size: 25px;
+				text-align: center;
+				padding: 150px 0 50px 0;
+				opacity: 0;
+				transform: translateX(-30px);
+				/*transition:  all 1s linear ;*/
+			}
+			
+			.workMore {
+				font-size: 18px;
+				text-align: center;
+				padding: 0px 0 50px 0;
+				line-height: 40px;
+				opacity: 0;
+				transform: translateY(30px);
+			}
+			
+			.music {}
+			
+			.musicTitle {
+				clear: both;
+				font-size: 25px;
+				text-align: center;
+				padding-top: 100px;
+				opacity: 0;
+			}
+			
+			#music {
+				width: 500px;
+			}
+			
+			.musicLeft {
+				background-image: url(../image/guitar.jpg);
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: 500px;
+				width: 500px;
+				height: 300px;
+				float: left;
+				margin-left: 150px;
+			}
+			
+			.musicPart {
+				margin-top: 50px;
+				opacity: 0;
+				transform: translateX(30px);
+			}
+			
+			.musicRight {
+				float: left;
+				margin-left: 50px;
+			}
+			
+			.rightTitle {
+				font-size: 25px;
+				padding-left: 10px;
+			}
+			
+			.rightContent {
+				font-size: 18px;
+				line-height: 58px;
+				padding-left: 10px;
+			}
+			
+			.musicPart2 {
+				clear: both;
+				display: inline-block;
+				margin-top: 50px;
+				opacity: 0;
+				transform: translateX(30px);
+			}
+			
+			.part2Left {
+				float: left;
+				margin-left: 140px;
+			}
+			
+			.part2Left audio {
+				width: 400px;
+				margin-top: 20px;
+			}
+			
+			.part2Right {
+				background-image: url(../image/guitar4.jpg);
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: 500px;
+				width: 500px;
+				height: 300px;
+				float: left;
+				margin-left: 160px;
+			}
+			
+			.photos {
+				clear: both;
+				margin: 0 auto;
+				width: 1100px;
+				height: 500px;
+			}
+			
+			.picLi {
+				float: left;
+				width: 366px;
+				margin-top: 50px;
+			}
+			
+			.picLi div {
+				width: 300px;
+				height: 300px;
+				margin: 0 auto;
+			}
+			
+			.isPic1 {
+				background-image: url(../image/pic1.jpg);
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: 250px;
+			}
+			
+			.isPic2 {
+				background-image: url(../image/pic2.jpg);
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: 250px;
+			}
+			
+			.isPic3 {
+				background-image: url(../image/pic3.jpg);
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: 250px;
+			}
+			
+			.isPic4 {
+				background-image: url(../image/pic4.jpg);
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: 250px;
+			}
+			
+			.isPic5 {
+				background-image: url(../image/pic5.jpg);
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: 250px;
+			}
+			
+			.isPic6 {
+				background-image: url(../image/pic6.jpg);
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: 250px;
+			}
+			
+			.showMore {
+				opacity: 0;
+				width: 100%;
+				height: 100%;
+				text-align: center;
+				font-size: 25px;
+				line-height: 250px;
+			}
+			
+			.footer {
+				text-align: center;
+				font-size: 25px;
+				clear: both;
+			}

@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>WebSocket</title>
+</head>
+<body>
+	<h1>WebSocket</h1>
+	<input type="text" id="txtVal">
+	<input type="button" id="btn" value="发送">
+	<div id="txt"></div>
+</body>
+<script type="text/javascript">
+	var ws=new WebSocket("ws://echo.websocket.org");
+	var result=document.getElementById("txt");
+	ws.onopen=function(){
+		//打开连接
+		result.innerHTML="connected!";
+	}
+	ws.onclose=function(){
+		//有打开就有关闭
+		result.innerHTML="closed!";
+	}
+	ws.onmessage=function(e){
+		//收到消息后执行的方法
+		//返回的数据保存在e.data里面
+		result.innerHTML=e.data;
+	}
+	document.getElementById("btn").onclick=function(){
+		//发送消息
+		var val=document.getElementById("txtVal").value;
+		ws.send(val);
+	}
+</script>
+</html>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #JavaScript 原型与原型链
 
 TANGiMING
@@ -6,6 +7,9 @@ TANGiMING
 
 
 
+=======
+# JavaScript 原型与原型链
+>>>>>>> 30d604f5cb9959dbb5c88e8f75b8b9df06224a7e
 - 原型是一个对象
 - 其他对象可以通过它实现属性继承
 

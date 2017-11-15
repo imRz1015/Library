@@ -153,3 +153,60 @@ Object.values(obj)
     
 
 
+## String 字符串 ##
+
+str.charAt(index)
+
+返回指定索引位置处的字符。如果超出有效范围的索引值返回空字符串
+
+strObj.slice(start[,end]) 
+
+返回字符串的片段
+
+strObj.substring(start,end)
+
+返回位于String对象中指定位置的子字符串
+
+strObj.substr(start[,length])
+
+返回一个从指定位置开始的指定长度的子字符串
+
+strObj.indexOf(substr[,startIndex]) 
+
+返回String对象内第一次出现子字符串位置。如果没有找到子字符串，则返回-1。 
+
+    例如： 
+    01234567 
+    var str = "ABCDECDF"; 
+    str.indexOf("CD"，1); // 由1位置从左向右查找 123... 
+
+strObj.lastIndexOf(substr[,startindex]) 
+
+返回String对象中字符串最后出现的位置。如果没有匹配到子字符串，则返回-1
+
+    startindex该整数值指出在String对象内进行查找的开始索引位置。如果省略，则查找从字符串的末尾开始。 
+    例如： 
+    01234567 
+    var str = "ABCDECDF"; 
+    str.lastIndexOf("CD",6); // 由6位置从右向左查找 ...456 
+    结果：5 
+
+strObj.search(reExp) 
+
+返回与正则表达式查找内容匹配的第一个字符串的位置
+
+str.concat([string1[,string2...]]) 
+
+返回字符串值，该值包含了两个或多个提供的字符串的连接
+
+strObj.split([separator[,limit]]) 
+
+将一个字符串分割为子字符串，然后将结果作为字符串数组返回
+
+str.toLowerCase(); 
+
+返回一个字符串，该字符串中的字母被转换成小写
+
+str.toUpperCase(); 
+
+返回一个字符串，该字符串中的所有字母都被转换为大写字母

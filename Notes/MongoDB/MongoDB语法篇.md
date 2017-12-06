@@ -77,6 +77,19 @@ upsert、multi、writeConcern可选
 
 将MongoDB 教程修改为MongoDB
 
+#### 修改数组某一个值的方法: ####
+
+	db.userInfo.update({"test.name":"q1777"},{$set:{"test.$.age":"999"}})
+
+"test.name":"q1777"为查询条件，指test数组下name=q1777的元素；
+
+$set：修改符
+
+"test.$.age":"999"：这个$在这里表示下标，如果你明确知道下标，可以直接写出来，比如：
+
+	"test.1.age":"88"
+
+但是大多数时候我们是不知道下标的，所以用$代替，指向被查找到的元素下标
 
 #### save() 方法通过传入的文档来替换已有文档。语法格式如下： ####
 
@@ -107,6 +120,13 @@ db.collection.updateOne() 向指定集合更新单个文档
 db.collection.updateMany() 向指定集合更新多个文档
 
 ### 删除文档： ###
+
+删除文档（主要）：
+	
+	db.userInfo.update({"name":"qqq"},{"$pull":{"address":{"name":"q2"}}})
+name=qqq为查询条件
+$pull为删除
+address为数组
 
 删除集合下全部文档
 

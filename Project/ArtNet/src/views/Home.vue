@@ -89,7 +89,7 @@ header {
     z-index: 5;
     @include flex(center);
     height: $height;
-    background-color: #81c0c0;
+    background-color: #fff;
     input {
         // width: 42%;
         border: none;
@@ -121,25 +121,25 @@ header {
 </style>
 
 <template>
-    <div id="header">
-        <div :class="{isFixed:fixed}">
-            <header>
-                <i class="iconfont icon-logo"></i>
-                <div class="nav first">原创艺术</div>
-                <div class="nav">造艺</div>
-                <div class="nav">藏艺术</div>
-                <div class="nav">我的珍藏</div>
-                <i class="search iconfont" :class="search" @click="openSearchInput"></i>
-                <div class="login">Push to Start</div>
-            </header>
-            <transition name="fade">
-                <div class="searchInput" v-show="searched">
-                    <input type="text" ref="searchInput" @blur="searched=false;" placeholder="Search Artist or Works?">
-                </div>
-            </transition>
+  <div id="header">
+    <div :class="{isFixed:fixed}">
+      <header>
+        <i class="iconfont icon-logo"></i>
+        <div class="nav first">原创艺术</div>
+        <div class="nav">造艺</div>
+        <div class="nav">藏艺术</div>
+        <div class="nav">我的珍藏</div>
+        <i class="search iconfont" :class="search" @click="openSearchInput"></i>
+        <div class="login">Push to Start</div>
+      </header>
+      <transition name="fade">
+        <div class="searchInput" v-show="searched">
+          <input type="text" ref="searchInput" @blur="searched=false;" placeholder="Search Artist or Works?">
         </div>
-        <router-view />
+      </transition>
     </div>
+    <router-view />
+  </div>
 </template>
 
 <script>

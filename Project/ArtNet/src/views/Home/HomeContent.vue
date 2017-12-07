@@ -124,6 +124,7 @@ export default {
     },
     mounted() {
         this.timerFun();
+        //start
     }
 };
 </script>

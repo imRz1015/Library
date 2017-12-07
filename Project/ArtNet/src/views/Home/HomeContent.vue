@@ -117,7 +117,7 @@ export default {
         timerFun() {
             this.timer = setInterval(() => {
                 let oIndex = this.imgIndex;
-                oIndex++ == 7 && (oIndex = 1);
+                oIndex++ == 6 && (oIndex = 1);
                 this.changeImg(oIndex);
             }, 4000);
         }

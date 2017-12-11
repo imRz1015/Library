@@ -25,25 +25,37 @@ const router = express.Router();
 // });
 //创建一个登录验证的接口
 router.post("/api/login/validateAccount", (req, res) => {
-    let result = {
-        account: req.body.account,
-        password: req.body.password
-    };
-    models.Login.find(result, (err, odata) => {
-        if (err) {
-            res.send(err);
-        } else {
-            console.log(odata);
-            if (odata.length) {
-                var data = {
-                    data: odata[0]
-                };
-                res.send(data);
-            } else {
-                res.send("0");
-            }
-        }
-    });
+  let result = {
+    username: req.body.username,
+    password: req.body.password
+  };
+  models.Login.find(result, (err, odata) => {
+    if (err) {
+      res.send(err);
+    } else {
+      // console.log(result.username, result.password);
+      // console.log(odata);
+      if (odata.length) {
+        var data = {
+          data: odata[0]
+        };
+        res.send(data);
+      } else {
+        res.send("没有找到");
+      }
+    }
+  });
+});
+//获取首页轮播图
+router.get("/api/index/swiperBg", (req, res) => {
+  models.swiperBg.find((err, data) => {
+    if (err) {
+      res.send(err);
+    } else {
+      console.log(data);
+      res.send(data);
+    }
+  });
 });
 // 获取已有账号接口
 // router.get("/api/login/getAccount", (req, res) => {

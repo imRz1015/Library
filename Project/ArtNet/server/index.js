@@ -14,29 +14,17 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use((req, res, next) => {
-    console.log("66666666666666666666");
-    next();
-});
-app.use("/", (req, res, next) => {
-    console.log("77777777777777777");
-    next();
-});
-app.use("*", (req, res, next) => {
-    console.log("8888888888888888");
-    next();
-});
 app.use(api);
 // 访问静态资源文件 这里是访问所有dist目录下的静态资源文件
 // app.use(express.static(path.resolve(__dirname, "../dist")));
 // 因为是单页应用 所有请求都走/dist/index.html
 // app.get("*", function(req, res) {
-//     console.log("hello nodejs11111");
-//     // const html = fs.readFileSync(
-//     //     path.resolve(__dirname, "../dist/index.html"),
-//     //     "utf-8"
-//     // );
-//     // res.send(html);
+//   console.log("hello nodejs11111");
+//   const html = fs.readFileSync(
+//     path.resolve(__dirname, "../dist/index.html"),
+//     "utf-8"
+//   );
+//   res.send(html);
 // });
 // 监听8088端口
 app.listen(8088);

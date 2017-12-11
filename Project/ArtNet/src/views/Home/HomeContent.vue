@@ -160,6 +160,20 @@
                             }
                         }
                     }
+                    .intro {
+                        padding: 20px;
+                        font-size: 12px;
+                        line-height: 18px;
+                        .artist,
+                        .price {
+                            color: #000;
+                            font-weight: 600;
+                        }
+                        .goodInfo {
+                            font-weight: 500;
+                            color: #666;
+                        }
+                    }
                 }
             }
         }
@@ -167,51 +181,51 @@
 }
 </style>
 <template>
-  <div id="homeContent">
-    <div class="swipe-container">
-      <transition name="fade">
-        <img v-show="showImg" :src="front" class="imgStyle">
-      </transition>
-      <transition name="fade">
-        <img v-show="!showImg" :src="end" class="imgStyle">
-      </transition>
-    </div>
-    <div class="bodyContent">
-      <!-- //翻页 -->
-      <div class="pagenation" ref="pages">
-        <div class="list" :class="{currLi:i==imgIndex}" v-for="i in 6" :key="i" @click="changeImg(i)"></div>
-      </div>
-      <!-- 推荐 -->
-      <div class="category">
-        <div class="categoryTitle">
-          <p>
-            <span>推荐 / CATEGORY</span>
-            <span>更多</span>
-          </p>
-          <div class="kinds">
-            <div>油画</div>
-            <div>版画</div>
-            <div>水墨</div>
-            <div>水彩</div>
-          </div>
+    <div id="homeContent">
+        <div class="swipe-container">
+            <transition name="fade">
+                <img v-show="showImg" :src="front" class="imgStyle">
+            </transition>
+            <transition name="fade">
+                <img v-show="!showImg" :src="end" class="imgStyle">
+            </transition>
         </div>
-        <div class="categoryImgs">
-          <div class="categoryItem" v-for="item in categories" :key="item.artist">
-            <div class="imgBox">
-              <img :src="item.img">
+        <div class="bodyContent">
+            <!-- //翻页 -->
+            <div class="pagenation" ref="pages">
+                <div class="list" :class="{currLi:i==imgIndex}" v-for="i in 6" :key="i" @click="changeImg(i)"></div>
             </div>
-            <div class="intro">
-              <p class="artist">{{item.artist}}</p>
-              <p class="goodInfo">{{item.goodName}}，{{item.time}}</p>
-              <p class="goodInfo">{{item.kind}}&nbsp;&nbsp;{{item.size}}</p>
-              <p class="price">￥{{Math.floor((item.price/1000))}},{{item.price%1000}}</p>
+            <!-- 推荐 -->
+            <div class="category">
+                <div class="categoryTitle">
+                    <p>
+                        <span>推荐 / CATEGORY</span>
+                        <span>更多</span>
+                    </p>
+                    <div class="kinds">
+                        <div>油画</div>
+                        <div>版画</div>
+                        <div>水墨</div>
+                        <div>水彩</div>
+                    </div>
+                </div>
+                <div class="categoryImgs">
+                    <div class="categoryItem" v-for="item in categories" :key="item.artist">
+                        <div class="imgBox">
+                            <img :src="item.img">
+                        </div>
+                        <div class="intro">
+                            <p class="artist">{{item.artist}}</p>
+                            <p class="goodInfo">{{item.goodName}}，{{item.time}}</p>
+                            <p class="goodInfo">{{item.kind}}&nbsp;&nbsp;{{item.size}}</p>
+                            <p class="price">￥{{Math.floor((item.price/1000))}},{{item.price%1000}}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
 
+        </div>
     </div>
-  </div>
 </template>
 <script>
 export default {
@@ -266,7 +280,6 @@ export default {
     methods: {
         changeImg(index) {
             clearInterval(this.timer);
-            //重复点击判断
             if (this.imgIndex != index) {
                 this.showImg = !this.showImg;
                 this.showImg
@@ -285,6 +298,10 @@ export default {
         }
     },
     mounted() {
+        this.$http.get("/api/index/swiperBg").then(data => {
+            // this.categories = data.data;
+            console.log(data);
+        });
         this.timerFun();
     }
 };

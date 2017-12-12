@@ -24,49 +24,66 @@ const router = express.Router();
 //     });
 // });
 //创建一个登录验证的接口
-router.post("/api/login/validateAccount", (req, res) => {
-  let result = {
-    username: req.body.username,
-    password: req.body.password
-  };
-  models.Login.find(result, (err, odata) => {
-    if (err) {
-      res.send(err);
-    } else {
-      // console.log(result.username, result.password);
-      // console.log(odata);
-      if (odata.length) {
-        var data = {
-          data: odata[0]
-        };
-        res.send(data);
-      } else {
-        res.send("没有找到");
-      }
-    }
-  });
-});
+// router.post("/api/login/validateAccount", (req, res) => {
+//   let result = {
+//     username: req.body.username,
+//     password: req.body.password
+//   };
+//   models.Login.find(result, (err, odata) => {
+//     if (err) {
+//       res.send(err);
+//     } else {
+//       // console.log(result.username, result.password);
+//       // console.log(odata);
+//       if (odata.length) {
+//         var data = {
+//           data: odata[0]
+//         };
+//         res.send(data);
+//       } else {
+//         res.send("没有找到");
+//       }
+//     }
+//   });
+// });
 //获取首页轮播图
 router.get("/api/index/swiperBg", (req, res) => {
   models.swiperBg.find((err, data) => {
     if (err) {
       res.send(err);
     } else {
-      console.log(data);
+      // console.log(data);
       res.send(data);
     }
   });
 });
-// 获取已有账号接口
-// router.get("/api/login/getAccount", (req, res) => {
-//     // 通过模型去查找数据库
-//     models.Login.find((err, data) => {
-//         if (err) {
-//             res.send(err);
-//         } else {
-//             res.send(data);
-//         }
-//     });
-// });
+/******
+ * 获取商品信息接口
+ * 该接口通过参数来判定调用的地方
+ * params为String
+ ***** */
+router.get("/api/getGoods", (req, res) => {
+  switch (req.query.pos) {
+    case "category":
+      //获取推荐
+      models.getGoods.find((err, data) => {
+        if (err) {
+          res.send(err);
+        } else {
+          let result = [];
+          for (let i = 0; i < 4; i++) {
+            var randomNum = Math.round(Math.random() * data.length);
+            result.push(data[randomNum]);
+          }
+          // console.log(result);
+          res.send(result);
+        }
+      });
+      break;
+    case "all":
+      console.log("获得其他");
+      break;
+  }
+});
 
 module.exports = router;

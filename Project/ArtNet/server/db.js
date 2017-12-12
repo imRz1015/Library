@@ -22,10 +22,32 @@ const loginSchema = new mongoose.Schema({
 const swiperBg = new mongoose.Schema({
   img: String
 });
+/************** 定义模式SwiperSchema **************/
+const getGoods = new mongoose.Schema({
+  images: String,
+  name: String,
+  artist: String,
+  meterial: String,
+  size: {
+    x: Number,
+    y: Number
+  },
+  time: String,
+  classify: String,
+  Style: String,
+  theme: String,
+  position: String,
+  price: Number,
+  status: String,
+  colorful: String,
+  shape: String,
+  appraiseArr: [{ content: String, name: String }]
+});
 /************** 定义模型Model **************/
 const Models = {
   Login: mongoose.model("logins", loginSchema),
-  swiperBg: mongoose.model("bgs", swiperBg)
+  swiperBg: mongoose.model("bgs", swiperBg),
+  getGoods: mongoose.model("goods", getGoods)
 };
 
 module.exports = Models;

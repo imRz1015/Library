@@ -108,6 +108,12 @@
                     }
                 }
                 .kinds {
+                    @mixin defaultStyle() {
+                        cursor: pointer;
+                        border: 1px solid #ddd;
+                        border-bottom: 1px solid #fff;
+                        background-color: #fff;
+                    }
                     @include flex(center);
                     div {
                         width: 100px;
@@ -123,12 +129,11 @@
                         color: #000000;
                         border: 1px solid RGBA(255, 255, 255, 0);
                         margin-bottom: -6px;
+                        &:first-child {
+                            @include defaultStyle();
+                        }
                         &:hover {
-                            cursor: pointer;
-                            border: 1px solid #ddd;
-                            border-bottom: 1px solid #fff;
-                            background-color: #fff;
-                            // box-sizing: border-box;
+                            @include defaultStyle();
                         }
                     }
                 }
@@ -181,100 +186,64 @@
 }
 </style>
 <template>
-    <div id="homeContent">
-        <div class="swipe-container">
-            <transition name="fade">
-                <img v-show="showImg" :src="front" class="imgStyle">
-            </transition>
-            <transition name="fade">
-                <img v-show="!showImg" :src="end" class="imgStyle">
-            </transition>
-        </div>
-        <div class="bodyContent">
-            <!-- //翻页 -->
-            <div class="pagenation" ref="pages">
-                <div class="list" :class="{currLi:i==imgIndex}" v-for="i in 6" :key="i" @click="changeImg(i)"></div>
-            </div>
-            <!-- 推荐 -->
-            <div class="category">
-                <div class="categoryTitle">
-                    <p>
-                        <span>推荐 / CATEGORY</span>
-                        <span>更多</span>
-                    </p>
-                    <div class="kinds">
-                        <div>油画</div>
-                        <div>版画</div>
-                        <div>水墨</div>
-                        <div>水彩</div>
-                    </div>
-                </div>
-                <div class="categoryImgs">
-                    <div class="categoryItem" v-for="item in categories" :key="item.artist">
-                        <div class="imgBox">
-                            <img :src="item.img">
-                        </div>
-                        <div class="intro">
-                            <p class="artist">{{item.artist}}</p>
-                            <p class="goodInfo">{{item.goodName}}，{{item.time}}</p>
-                            <p class="goodInfo">{{item.kind}}&nbsp;&nbsp;{{item.size}}</p>
-                            <p class="price">￥{{Math.floor((item.price/1000))}},{{item.price%1000}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+  <div id="homeContent">
+    <div class="swipe-container">
+      <transition name="fade">
+        <img v-show="showImg" :src="front" class="imgStyle">
+      </transition>
+      <transition name="fade">
+        <img v-show="!showImg" :src="end" class="imgStyle">
+      </transition>
     </div>
+    <div class="bodyContent">
+      <!-- //翻页 -->
+      <div class="pagenation" ref="pages">
+        <div class="list" :class="{currLi:i==imgIndex}" v-for="i in 6" :key="i" @click="changeImg(i)"></div>
+      </div>
+      <!-- 推荐 -->
+      <div class="category">
+        <div class="categoryTitle">
+          <p>
+            <span>推荐 / CATEGORY</span>
+            <span>更多</span>
+          </p>
+          <div class="kinds">
+            <div>油画</div>
+            <div>版画</div>
+            <div>水墨</div>
+            <div>水彩</div>
+          </div>
+        </div>
+        <div class="categoryImgs">
+          <div class="categoryItem" v-for="item in categories" :key="item.artist">
+            <div class="imgBox">
+              <img :src="'/static/img/'+item.images+'.jpg'">
+            </div>
+            <div class="intro">
+              <p class="artist">{{item.artist}}</p>
+              <p class="goodInfo">{{item.name}}，{{item.time}}</p>
+              <p class="goodInfo">{{item.classify}}&nbsp;&nbsp;{{item.size.x}}x{{item.size.y}}cm</p>
+              <p class="price">￥{{Math.floor((item.price/1000))}},{{item.price%1000}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </template>
 <script>
 export default {
     data() {
         return {
-            front: "/static/img/bg1.jpg",
-            end: "/static/img/bg2.jpg",
+            front: "",
+            end: "",
+            imgArr: [],
             imgIndex: 1,
             showImg: true,
             timer: null,
             //推荐
-            categories: [
-                {
-                    img: "/static/img/0.jpg",
-                    artist: "王大锤",
-                    goodName: "飞翔",
-                    time: "2017",
-                    kind: "油画",
-                    size: "50×40cm",
-                    price: 2356
-                },
-                {
-                    img: "/static/img/0.jpg",
-                    artist: "王大锤",
-                    goodName: "飞翔",
-                    time: "2017",
-                    kind: "油画",
-                    size: "50×40cm",
-                    price: 2500
-                },
-                {
-                    img: "/static/img/0.jpg",
-                    artist: "王大锤",
-                    goodName: "飞翔",
-                    time: "2017",
-                    kind: "油画",
-                    size: "50×40cm",
-                    price: 7850
-                },
-                {
-                    img: "/static/img/0.jpg",
-                    artist: "王大锤",
-                    goodName: "飞翔",
-                    time: "2017",
-                    kind: "油画",
-                    size: "50×40cm",
-                    price: 12500
-                }
-            ]
+            categories: []
         };
     },
     methods: {
@@ -283,8 +252,8 @@ export default {
             if (this.imgIndex != index) {
                 this.showImg = !this.showImg;
                 this.showImg
-                    ? (this.front = `/static/img/bg${index}.jpg`)
-                    : (this.end = `/static/img/bg${index}.jpg`);
+                    ? (this.front = this.imgArr[index - 1].img)
+                    : (this.end = this.imgArr[index - 1].img);
                 this.imgIndex = index;
             }
             this.timerFun();
@@ -298,11 +267,27 @@ export default {
         }
     },
     mounted() {
-        this.$http.get("/api/index/swiperBg").then(data => {
-            // this.categories = data.data;
-            console.log(data);
-        });
-        this.timerFun();
+        this.$http
+            .get("/api/index/swiperBg")
+            .then(data => {
+                this.front = data.data[0].img;
+                this.end = data.data[1].img;
+                this.imgArr = data.data;
+                this.timerFun();
+            })
+            .catch(err => {
+                alert(err + "请刷新页面！");
+            });
+        this.$http
+            .get("/api/getGoods", {
+                params: {
+                    pos: "category"
+                }
+            })
+            .then(data => {
+                console.log(data);
+                this.categories = data.data;
+            });
     }
 };
 </script>

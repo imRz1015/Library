@@ -48,14 +48,14 @@ const router = express.Router();
 // });
 //获取首页轮播图
 router.get("/api/index/swiperBg", (req, res) => {
-  models.swiperBg.find((err, data) => {
-    if (err) {
-      res.send(err);
-    } else {
-      // console.log(data);
-      res.send(data);
-    }
-  });
+    models.swiperBg.find((err, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            // console.log(data);
+            res.send(data);
+        }
+    });
 });
 /******
  * 获取商品信息接口
@@ -63,27 +63,23 @@ router.get("/api/index/swiperBg", (req, res) => {
  * params为String
  ***** */
 router.get("/api/getGoods", (req, res) => {
-  switch (req.query.pos) {
-    case "category":
-      //获取推荐
-      models.getGoods.find((err, data) => {
+    //获取推荐
+    models.getGoods.find({ classify: req.query.pos }, (err, data) => {
         if (err) {
-          res.send(err);
+            res.send(err);
         } else {
-          let result = [];
-          for (let i = 0; i < 4; i++) {
-            var randomNum = Math.round(Math.random() * data.length);
-            result.push(data[randomNum]);
-          }
-          // console.log(result);
-          res.send(result);
+            let result = [];
+            for (let i = 0; i < 4; i++) {
+                var randomNum = Math.round(Math.random() * (data.length - 1));
+                result.push(data[randomNum]);
+            }
+            res.send(result);
         }
-      });
-      break;
-    case "all":
-      console.log("获得其他");
-      break;
-  }
+    });
 });
-
+router.get("/api/getLatest", (req, res) => {
+    models.getGoods.find().sort({ time: -1 }).limit(10).exec((err, data) => {
+        res.send(data)
+    });
+})
 module.exports = router;

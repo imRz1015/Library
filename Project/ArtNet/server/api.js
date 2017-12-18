@@ -4,55 +4,82 @@
 const models = require("./db");
 const express = require("express");
 const router = express.Router();
+var svgCaptcha = require('svg-captcha');
+/**
+ * 注册接口部分
+ */
+//登录
+router.post("/api/Login", (req, res) => {
+    var username = req.body.data.account;
+    var password = req.body.data.password;
+    switch (req.body.kind) {
+        case "log":
+            var result = {};
+            models.Login.find({ username }, (err, data) => {
+                if (data.length) {
+                    //账号存在
+                    if (password == data[0].password) {
+                        //是否密码错误
+                        result.code = 0;
+                        result.msg = "登录成功!"
+                        res.send(result);
+                    } else {
+                        result.code = 1;
+                        result.msg = "密码错误!"
+                        res.send(result);
+                    }
+                } else {
+                    //账号不存在
+                    result.code = 2;
+                    result.msg = "用户名不存在!";
+                    res.send(result);
+                }
+            })
+            break;
+        case "reg":
+            var result = {};
+            models.Login.find({ username }, (err, data) => {
+                if (data.length) {
+                    result.code = 1;
+                    result.msg = "该账号已被注册";
+                    res.send(result);
+                } else {
+                    new models.Login({
+                        username, password
+                    }).save((err, data) => {
+                        result.code = 0;
+                        result.msg = "注册成功!";
+                        res.send(result);
+                    });
+                }
+            })
+            break;
 
-/************** 创建(create) 读取(get) 更新(update) 删除(delete) **************/
-
-// 创建账号接口
-// router.post("/api/login/createAccount", (req, res) => {
-//     // 这里的req.body能够使用就在index.js中引入了const bodyParser = require('body-parser')
-//     let newAccount = new models.Login({
-//         account: req.body.account,
-//         password: req.body.password
-//     });
-//     // 保存数据newAccount数据进mongoDB
-//     newAccount.save((err, data) => {
-//         if (err) {
-//             res.send(err);
-//         } else {
-//             res.send("createAccount successed");
-//         }
-//     });
-// });
-//创建一个登录验证的接口
-// router.post("/api/login/validateAccount", (req, res) => {
-//   let result = {
-//     username: req.body.username,
-//     password: req.body.password
-//   };
-//   models.Login.find(result, (err, odata) => {
-//     if (err) {
-//       res.send(err);
-//     } else {
-//       // console.log(result.username, result.password);
-//       // console.log(odata);
-//       if (odata.length) {
-//         var data = {
-//           data: odata[0]
-//         };
-//         res.send(data);
-//       } else {
-//         res.send("没有找到");
-//       }
-//     }
-//   });
-// });
+    }
+})
+//验证码
+router.get("/api/Login/getPassCode", (req, res) => {
+    var captcha = svgCaptcha.create({
+        size: 4,
+        ignoreChars: '0o1ig',
+        noise: 1,
+        color: true,
+        width: 130,
+        height: 40
+    });
+    res.type('svg');
+    res.send(captcha.data);
+})
+//验证session
+router.get("create", (req, res) => {
+    console.log(req.session);
+})
 //获取首页轮播图
 router.get("/api/index/swiperBg", (req, res) => {
     models.swiperBg.find((err, data) => {
         if (err) {
             res.send(err);
         } else {
-            // console.log(data);
             res.send(data);
         }
     });

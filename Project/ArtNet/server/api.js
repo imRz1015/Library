@@ -1,5 +1,4 @@
 //接口
-// 可能是我的node版本问题，不用严格模式使用ES6语法会报错
 "use strict";
 const models = require("./db");
 const express = require("express");
@@ -74,6 +73,9 @@ router.get("/api/Login/getPassCode", (req, res) => {
 router.get("create", (req, res) => {
     console.log(req.session);
 })
+/**
+ * 首页部分
+ */
 //获取首页轮播图
 router.get("/api/index/swiperBg", (req, res) => {
     models.swiperBg.find((err, data) => {
@@ -85,9 +87,7 @@ router.get("/api/index/swiperBg", (req, res) => {
     });
 });
 /******
- * 获取商品信息接口
- * 该接口通过参数来判定调用的地方
- * params为String
+ * 获取推荐商品接口
  ***** */
 router.get("/api/getGoods", (req, res) => {
     //获取推荐
@@ -108,5 +108,22 @@ router.get("/api/getLatest", (req, res) => {
     models.getGoods.find().sort({ time: -1 }).limit(10).exec((err, data) => {
         res.send(data)
     });
+})
+/**
+ * 获取商品接口
+ */
+router.get("/api/getList", (req, res) => {
+    models.getGoods.find().limit(20).exec((err, data) => {
+        let result = {};
+        if (err) {
+            result.code = 1;
+            result.code = "获取商品信息失败!"
+        } else {
+            result.code = 0;
+            result.code = "获取商品信息成功"
+            result.data = data;
+            res.send(result);
+        }
+    })
 })
 module.exports = router;

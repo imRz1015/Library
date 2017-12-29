@@ -11,8 +11,31 @@
     padding-top: 68px;
     .screen {
         @include flex(space-between);
+        @mixin flexList($justify,$items) {
+            display: flex;
+            display: -webkit-flex;
+            flex-direction: column;
+            -webkit-flex-direction: column;
+            justify-content: $justify;
+            -webkit-justify-content: $justify;
+            align-items: $items;
+            -wenkit-align-items: $items;
+        }
+        border-bottom: 1px solid #eee;
+
         .left {
-            @extend .screen;
+            @include flex(space-between);
+            .params {
+                .isClick {
+                    background-color: #000 !important;
+                }
+                .clickFont {
+                    color: #000;
+                }
+                .clickColor {
+                    border-color: #000 !important;
+                }
+            }
             .price,
             .size,
             .color,
@@ -34,7 +57,7 @@
                     background-color: #ddd;
                     margin-left: 2px;
                     &:hover {
-                        background-color: #b0b0b0;
+                        opacity: 0.6;
                     }
                     &:first-of-type {
                         i {
@@ -96,6 +119,115 @@
                     background-size: 74px 16px;
                 }
             }
+            .shape {
+                @include flex(space-between);
+                @mixin shapeStyle() {
+                    border: 1px solid #666;
+                    margin-right: 5%;
+                    background-color: #fff;
+                }
+                .f {
+                    @include shapeStyle();
+                    width: 24px;
+                    height: 24px;
+                }
+                .h {
+                    @include shapeStyle();
+                    height: 16px;
+                    width: 32px;
+                }
+                .s {
+                    @include shapeStyle();
+                    height: 32px;
+                    width: 16px;
+                }
+                .y {
+                    @include shapeStyle();
+                    width: 24px !important;
+                    height: 24px;
+                    border-radius: 50%;
+                    -webkit-border-radius: 50%;
+                }
+                .wjx {
+                    width: 36px !important;
+                    height: 36px;
+                    text-align: center;
+                    line-height: 36px;
+                    background-color: #fff;
+                    &:hover {
+                        background-color: transparent !important;
+                    }
+                    i {
+                        position: static !important;
+                        font-size: 36px;
+                    }
+                }
+            }
+        }
+        .middle {
+            @include flex(space-between);
+            padding: 0 0px 0 50px;
+            .space,
+            .kinds {
+                @include flexList(center,flex-start);
+                .title {
+                    font-size: 14px;
+                    font-weight: bold;
+                    margin: 25px 50px 30px 0;
+                }
+                .items {
+                    cursor: pointer;
+                    line-height: 36px;
+                    font-size: 14px;
+                    color: #666;
+                }
+            }
+        }
+        .right {
+            @include flex(space-between);
+            border-left: 1px solid #eee;
+            .options {
+                @include flexList(center,center);
+                margin: 20px 50px 0px 50px;
+                span {
+                    cursor: pointer;
+                    line-height: 30px;
+                    font-size: 14px;
+                    color: #666;
+                    &:nth-child(5) {
+                        margin-top: 30px;
+                    }
+                }
+            }
+            .bg {
+                margin-left: 10px;
+                width: 306px;
+                height: 310px;
+                img {
+                    height: 100%;
+                }
+            }
+        }
+    }
+    .search {
+        @include flex(flex-start);
+        padding: 15px 7.5%;
+        border-bottom: 1px solid #eee;
+        .logo {
+            width: 18px;
+            height: 18px;
+            i {
+                font-size: 18px;
+                color: #666;
+            }
+        }
+        .inputPart {
+            margin-left: 10px;
+            input {
+                outline: none;
+                border: none;
+                width: 30vw;
+            }
         }
     }
     .goodsContainer {
@@ -146,26 +278,56 @@
                 <div class="params">
                     <div class="price">
                         <span>价格</span>
-                        <div v-for="(i,index) in prices">
-                            <i>{{i | changePrice}}</i>
+                        <div v-for="(i,index) in prices" @click="clickPrice=index;" :class="{'isClick':clickPrice===index}">
+                            <i :class="{'clickFont':clickPrice===index||(clickPrice+1)===index}">{{i | changePrice}}</i>
                         </div>
                     </div>
                     <div class="size">
                         <span>尺寸</span>
-                        <div v-for="(i,index) in size">
-                            <i>{{i | changeSize}}</i>
+                        <div v-for="(i,index) in size" @click="clickSize=index;" :class="{'isClick':clickSize===index}">
+                            <i :class="{'clickFont':clickSize===index||(clickSize+1)===index}">{{i | changeSize}}</i>
                         </div>
                     </div>
                     <div class="color">
                         <span>颜色</span>
-                        <div v-for="i in color" :class="[i]"></div>
+                        <div v-for="(i,index) in color" @click="clickedColor=index" :class="[i,{clickColor:clickedColor===index}]"></div>
                     </div>
                     <div class="shape">
                         <span>形状</span>
+                        <div v-for="(i,index) in shape" :class="[i,{isClick:clickedShape===index}]" @click="addCondition(index)"></div>
+                        <div class="wjx" @click="addCondition(4)" @mouseover="flag && (isHover=0)" @mouseout="flag && (isHover=1)">
+                            <i class="iconfont" ref="wjx" :class="{'icon-wujiaoxing':!isHover,'icon-kongxinwujiaoxing':isHover}"></i>
+                        </div>
                     </div>
                 </div>
                 <div class="classify">
                 </div>
+            </div>
+            <div class="middle">
+                <div class="space">
+                    <span class="title">摆放空间</span>
+                    <span class="items" v-for="i in spaces">{{i}}</span>
+                </div>
+                <div class="kinds">
+                    <span class="title">分类</span>
+                    <span class="items" v-for="i in kinds">{{i}}</span>
+                </div>
+            </div>
+            <div class="right">
+                <div class="options">
+                    <span v-for="(i,index) in classify" @mouseover="showBg=index">{{i}}</span>
+                </div>
+                <div class="bg">
+                    <img :src="'../../../static/img/bg'+showBg+'.png'">
+                </div>
+            </div>
+        </div>
+        <div class="search">
+            <div class="logo">
+                <i class="iconfont icon-search"></i>
+            </div>
+            <div class="inputPart">
+                <input type="text" placeholder="搜索艺术家或艺术品">
             </div>
         </div>
         <div class="goodsContainer" v-if="lists.length" ref="parentBox">
@@ -190,7 +352,18 @@ export default {
             lists: [],
             prices: [0, 2000, 8000, 15000, 30000, "max"],
             size: [0, 50, 100, 150, 200, "max"],
-            color: ["red", "yellow", "green", "blue", "gray"]
+            color: ["red", "yellow", "green", "blue", "gray"],
+            shape: ["f", "h", "s", "y"],
+            flag: true,
+            isHover: 1,
+            spaces: ["办公", "客厅", "书房", "餐厅", "儿童房", "走廊/回廊"],
+            kinds: ["油画", "版画", "水墨", "水彩(粉)", "雕塑", "摄影"],
+            classify: ["抽象", "具象", "观念", "传统国画", "人物", "风景", "静物"],
+            showBg: 0,
+            clickPrice: -2,
+            clickSize: -2,
+            clickedColor: -2,
+            clickedShape: -2
         };
     },
     filters: {
@@ -243,6 +416,18 @@ export default {
                             boxHeight[minIndex] + childArr[n].offsetHeight;
                     }
                 }
+            }
+        },
+        addCondition(index) {
+            if (index != 4) {
+                this.clickedShape = index;
+                this.$refs.wjx.className = "iconfont icon-kongxinwujiaoxing";
+                this.$refs.wjx.style.color = "#666";
+            } else {
+                this.$refs.wjx.className = "iconfont icon-wujiaoxing";
+                this.$refs.wjx.style.color = "#000";
+                this.flag = false;
+                this.clickedShape = -2;
             }
         }
     },

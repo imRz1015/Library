@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(api);
 // 访问静态资源文件 这里是访问所有dist目录下的静态资源文件
-// app.use(express.static(path.resolve(__dirname, "../dist")));
+// app.use(express.static(path.resolve(__dirname, "../")));
 // 因为是单页应用 所有请求都走/dist/index.html
 // app.get("*", function(req, res) {
 //   console.log("hello nodejs11111");
@@ -27,5 +27,5 @@ app.use(api);
 //   res.send(html);
 // });
 // 监听8088端口
-app.listen(8088);
-console.log("监听端口8088");
+app.listen(9000);
+console.log("监听端口9000");

@@ -64,7 +64,7 @@ header {
     .login {
         @include flex(center);
         height: 40px;
-        margin-left: 360px;
+        margin-left: 25vw;
         padding: 0 8px;
         background-color: $white;
         border-radius: 4px;
@@ -121,25 +121,25 @@ header {
 </style>
 
 <template>
-  <div id="header">
-    <div :class="{isFixed:fixed}">
-      <header>
-        <i class="iconfont icon-logo"></i>
-        <div class="nav first">原创艺术</div>
-        <div class="nav">造艺</div>
-        <div class="nav">藏艺术</div>
-        <div class="nav">我的珍藏</div>
-        <i class="search iconfont" :class="search" @click="openSearchInput"></i>
-        <div class="login">Push to Start</div>
-      </header>
-      <transition name="fade">
-        <div class="searchInput" v-show="searched">
-          <input type="text" ref="searchInput" @blur="searched=false;" placeholder="Search Artist or Works?">
+    <div id="header">
+        <div :class="{isFixed:fixed}">
+            <header>
+                <router-link tag="i" to="/Home/HomeContent" class="iconfont icon-logo"></router-link>
+                <router-link tag="div" to="/Home/Goods" class="nav first">原创艺术</router-link>
+                <div class="nav">造艺</div>
+                <div class="nav">藏艺术</div>
+                <div class="nav">我的珍藏</div>
+                <i class="search iconfont" :class="search" @click="openSearchInput"></i>
+                <router-link tag="div" to="/login" class="login">Push to Start</router-link>
+            </header>
+            <transition name="fade">
+                <div class="searchInput" v-show="searched">
+                    <input type="text" ref="searchInput" @blur="searched=false;" placeholder="Search Artist or Works?">
+                </div>
+            </transition>
         </div>
-      </transition>
+        <router-view />
     </div>
-    <router-view />
-  </div>
 </template>
 
 <script>

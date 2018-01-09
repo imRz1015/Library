@@ -47,7 +47,7 @@ footer {
                 <i>艺言</i>
             </div>
         </div>
-        <p>川HZQ备19941025号 Copyright © 1994-2117 艺言 LOCALHOST.COM 版权所有</p>
+        <p>川备19941025号 Copyright © 1994-2117 艺言 LOCALHOST.COM 版权所有</p>
     </footer>
 </template>
 <script>

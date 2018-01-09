@@ -2,20 +2,14 @@
 
 > A Vue.js project
 
-## Build Setup
+## 前端
 
-``` bash
-# install dependencies
-npm install
+### Vue + Vuex + Vue-Router + ES6 + Axios + WebPack + SCSS + NPM
 
-# serve with hot reload at localhost:8080
-npm run dev
+## Server
 
-# build for production with minification
-npm run build
+### Node.js + Express + Mongoose
 
-# build for production and view the bundle analyzer report
-npm run build --report
-```
+## DB
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+### MongoDB

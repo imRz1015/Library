@@ -1,4 +1,4 @@
-# artnet
+# public
 
 > A Vue.js project
 

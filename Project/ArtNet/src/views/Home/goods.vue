@@ -80,6 +80,9 @@
                         width: 0;
                         height: 0;
                     }
+                    span {
+                        font-size: 0;
+                    }
                 }
                 &:first-child {
                     margin-top: 30px;
@@ -211,8 +214,23 @@
     }
     .search {
         @include flex(flex-start);
-        padding: 15px 7.5%;
+        padding: 10px 7.5%;
         border-bottom: 1px solid #eee;
+        .tags {
+            margin-right: 5px;
+            padding: 0 12px 0 12px;
+            font-size: 14px;
+            color: #fff;
+            background-color: #666;
+            border-radius: 14px;
+            -webkit-border-radius: 14px;
+            position: relative;
+            line-height: 28px;
+            i {
+                cursor: pointer;
+                font-size: 12px;
+            }
+        }
         .logo {
             width: 18px;
             height: 18px;
@@ -278,24 +296,28 @@
                 <div class="params">
                     <div class="price">
                         <span>价格</span>
-                        <div v-for="(i,index) in prices" @click="clickPrice=index;" :class="{'isClick':clickPrice===index}">
+                        <div v-for="(i,index) in prices" @click="clickPrice=index,addCondition($event,index,0)" :class="{'isClick':clickPrice===index}">
                             <i :class="{'clickFont':clickPrice===index||(clickPrice+1)===index}">{{i | changePrice}}</i>
                         </div>
                     </div>
                     <div class="size">
                         <span>尺寸</span>
-                        <div v-for="(i,index) in size" @click="clickSize=index;" :class="{'isClick':clickSize===index}">
+                        <div v-for="(i,index) in size" @click="clickSize=index,addCondition($event,index,1)" :class="{'isClick':clickSize===index}">
                             <i :class="{'clickFont':clickSize===index||(clickSize+1)===index}">{{i | changeSize}}</i>
                         </div>
                     </div>
                     <div class="color">
                         <span>颜色</span>
-                        <div v-for="(i,index) in color" @click="clickedColor=index" :class="[i,{clickColor:clickedColor===index}]"></div>
+                        <div v-for="(i,index) in color" @click="clickedColor=index,addCondition($event,index,2)" :class="[i,{clickColor:clickedColor===index}]">
+                            <span>{{colorC[index]}}</span>
+                        </div>
                     </div>
                     <div class="shape">
                         <span>形状</span>
-                        <div v-for="(i,index) in shape" :class="[i,{isClick:clickedShape===index}]" @click="addCondition(index)"></div>
-                        <div class="wjx" @click="addCondition(4)" @mouseover="flag && (isHover=0)" @mouseout="flag && (isHover=1)">
+                        <div v-for="(i,index) in shape" :class="[i,{isClick:clickedShape===index}]" @click="clickedShape=index,addCondition($event,index,3)">
+                            <span>{{shapeC[index]}}</span>
+                        </div>
+                        <div class="wjx" @click="addCondition($event,4,4)" @mouseover="flag && (isHover=0)" @mouseout="flag && (isHover=1)">
                             <i class="iconfont" ref="wjx" :class="{'icon-wujiaoxing':!isHover,'icon-kongxinwujiaoxing':isHover}"></i>
                         </div>
                     </div>
@@ -323,6 +345,10 @@
             </div>
         </div>
         <div class="search">
+            <div class="tags" v-for="(i,index) in goodsFilters" v-show="i">
+                {{i}}
+                <i class="iconfont icon-icon" @click="closeTag(index)"></i>
+            </div>
             <div class="logo">
                 <i class="iconfont icon-search"></i>
             </div>
@@ -353,7 +379,9 @@ export default {
             prices: [0, 2000, 8000, 15000, 30000, "max"],
             size: [0, 50, 100, 150, 200, "max"],
             color: ["red", "yellow", "green", "blue", "gray"],
+            colorC: ["红", "黄", "绿", "蓝", "黑白灰"],
             shape: ["f", "h", "s", "y"],
+            shapeC: ["方", "横", "竖", "圆"],
             flag: true,
             isHover: 1,
             spaces: ["办公", "客厅", "书房", "餐厅", "儿童房", "走廊/回廊"],
@@ -363,7 +391,27 @@ export default {
             clickPrice: -2,
             clickSize: -2,
             clickedColor: -2,
-            clickedShape: -2
+            clickedShape: -2,
+            //筛选条件记录
+            goodsFilters: {
+                price: "",
+                size: "",
+                color: "",
+                shape: "",
+                space: "",
+                classify: "",
+                kinds: ""
+            },
+            goodsFilters2: {
+                //用来查询的，单纯的数据
+                price: [],
+                size: [],
+                color: [],
+                shape: [],
+                space: [],
+                classify: [],
+                kinds: []
+            }
         };
     },
     filters: {
@@ -418,17 +466,62 @@ export default {
                 }
             }
         },
-        addCondition(index) {
-            if (index != 4) {
-                this.clickedShape = index;
-                this.$refs.wjx.className = "iconfont icon-kongxinwujiaoxing";
-                this.$refs.wjx.style.color = "#666";
-            } else {
-                this.$refs.wjx.className = "iconfont icon-wujiaoxing";
-                this.$refs.wjx.style.color = "#000";
-                this.flag = false;
-                this.clickedShape = -2;
+        addCondition(e, index, model) {
+            switch (model) {
+                case 0:
+                    this.goodsFilters.price = `￥${this.prices[index]}~${this
+                        .prices[index + 1]}`;
+                    this.goodsFilters2.price.splice(
+                        0,
+                        2,
+                        this.prices[index],
+                        this.prices[index + 1]
+                    );
+                    break;
+                case 1:
+                    this.goodsFilters.size = `${this.size[index]}~${this.size[
+                        index + 1
+                    ]}cm`;
+                    this.goodsFilters2.size.splice(
+                        0,
+                        2,
+                        this.size[index],
+                        this.size[index + 1]
+                    );
+                    break;
+                case 2:
+                    this.goodsFilters.color = `${this.colorC[index]}色系`;
+                    this.goodsFilters2.color.splice(0, 1, this.colorC[index]);
+                    break;
+                case 3:
+                    this.goodsFilters.shape = this.shapeC[index];
+                    this.goodsFilters2.shape.splice(0, 1, this.shape[index]);
+                    //还原五角星颜色
+                    this.clickedShape = index;
+                    this.$refs.wjx.className =
+                        "iconfont icon-kongxinwujiaoxing";
+                    this.$refs.wjx.style.color = "#666";
+                    break;
+                case 4:
+                    this.$refs.wjx.className = "iconfont icon-wujiaoxing";
+                    this.$refs.wjx.style.color = "#000";
+                    this.flag = false;
+                    this.clickedShape = -2;
+                    this.goodsFilters.shape = "不规则";
+                    this.goodsFilters2.shape.splice(0, 1, "不规则");
+                    break;
             }
+            this.$http
+                .get("/api/getList", {
+                    params: this.goodsFilters2
+                })
+                .then(data => {
+                    this.lists = data.data.data;
+                });
+            // console.log(e.target.innerText);
+        },
+        closeTag(index) {
+            this.goodsFilters[index] = "";
         }
     },
     mounted() {
